@@ -8,8 +8,16 @@ async function parse() {
 	var results = [];
 	$('.priceBfrDec').each(function () {
 		var price = $(this).text();
+		var flightType = $(this).parent().parent().prev()
+			.children()
+			.children('span.dl-modal-component-calling-element')
+			.children("a.lnkCabinName")
+			.children()
+			.first().text();
+
 		var metadata = {
-			price: parseInt(price)
+			price: parseInt(price),
+			flightType: flightType
 		};
 
 		results.push(metadata);
