@@ -1,9 +1,8 @@
-var cheerio = require('cheerio');
+let cheerio = require('cheerio');
 let delta_html = require('./puppet_request');
 
-async function parse() {
-	var html = await delta_html.getUrl();
-	//console.log(html);
+async function parseMoney() {
+	var html = await delta_html.getUrl('delta_money');
 	var $ = cheerio.load(html);
 	var results = [];
 	$('.priceBfrDec').each(function () {
@@ -16,16 +15,31 @@ async function parse() {
 			.first().text();
 
 		var metadata = {
-			price: parseInt(price),
-			flightType: flightType
+			airline: 'Delta',
+			flightType: flightType,
+			price: parseInt(price)
 		};
 
 		results.push(metadata);
 	});
 
 	console.log(results)
+	return results;
 }
 
-parse();
+async function parseMiles() {
+	var html = await delta_html.getUrl('delta_miles');
+	var $ = cheerio.load(html);
+	var results = [];
+	$('.tblCntMileBigTxt').each(function () {
+		var miles = $(this).text();
+		var flightType
+	});
+
+}
+
+parseMoney();
+//parseMiles();
+
 
 
