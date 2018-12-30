@@ -2,7 +2,7 @@ let cheerio = require('cheerio');
 let delta_html = require('./puppet_request');
 
 async function parseMoney() {
-	var html = await delta_html.getUrl('delta_money');
+	var html = await delta_html.getUrl();
 	var $ = cheerio.load(html);
 	var results = [];
 	$('.priceBfrDec').each(function () {
@@ -33,13 +33,13 @@ async function parseMiles() {
 	var results = [];
 	$('.tblCntMileBigTxt').each(function () {
 		var miles = $(this).text();
-		var flightType
+
 	});
 
 }
 
-parseMoney();
-//parseMiles();
+var flightInfo = parseMoney();
+
 
 
 
