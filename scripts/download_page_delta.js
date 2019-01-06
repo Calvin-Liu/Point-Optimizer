@@ -6,9 +6,6 @@ async function parseMoney() {
 	var $ = cheerio.load(html);
 	var results = [];
 	$('.fiveCabinClass.fareClassBody ').each(function () {
-		// var price = $(this).text();
-
-
 		var metadata;
 		var td = $(this);
 		var cabinInfoHolder = td.children();
@@ -47,18 +44,23 @@ async function parseMoney() {
 }
 
 async function parseMiles() {
-	var html = await delta_html.getUrl('delta_miles');
-	var $ = cheerio.load(html);
-	var results = [];
-	$('.tblCntMileBigTxt').each(function () {
-		var miles = $(this).text();
-
+	let responseJSON = await delta_html.getUrlMiles();
+	var pointsPerFlight = [];
+	responseJSON.itinerary.forEach(function (itin) {
+		itin.fare.forEach(function (fare) {
+			if (!fare.soldOut) {
+				pointsPerFlight.push(fare.basePrice.miles.miles);
+			} else {
+				pointsPerFlight.push('Sold Out');
+			}
+		})
 	});
-
+	console.log(pointsPerFlight);
+	return pointsPerFlight;
 }
 
-//var flightInfo = parseMoney();
-parseMoney();
+var flightInfo = parseMoney();
+var milesInfo = parseMiles();
 
 
 

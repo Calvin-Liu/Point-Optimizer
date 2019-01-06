@@ -88,24 +88,18 @@ async function getUrl() {
 }
 
 async function getUrlMiles() {
-    try {
-        var res = request(options, function (error, response, body) {
-            if (error) throw new Error(error);
-            body.itinerary.forEach(function (itin) {
-                itin.fare.forEach(function (fare) {
-                    if (!fare.soldOut) {
-                        console.log(fare.basePrice.miles.miles);
-                    } else {
-                        console.log("Sold out ticket");
-                    }
-                })
+    return new Promise(function (resolve, reject) {
+        try {
+            var res = request(options, function (error, response, body) {
+                if (error) throw new Error(error);
+                resolve(body);
             });
-        });
-    } catch (error) {
-        console.error(error);
-    }
+        } catch (error) {
+            console.error(error);
+            return reject;
+        }
+    })
 }
 
-//getUrlMiles();
-
 module.exports.getUrl = getUrl;
+module.exports.getUrlMiles = getUrlMiles;
