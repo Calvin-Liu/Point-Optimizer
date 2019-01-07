@@ -66,7 +66,7 @@ var options = {
     json: true
 };
 
-async function getUrl() {
+function getUrl() {
     return new Promise(function (resolve, reject) {
         puppeteer.launch().then(async browser => {
             try {
@@ -87,7 +87,7 @@ async function getUrl() {
 
 }
 
-async function getUrlMiles() {
+function getUrlMiles() {
     return new Promise(function (resolve, reject) {
         try {
             var res = request(options, function (error, response, body) {

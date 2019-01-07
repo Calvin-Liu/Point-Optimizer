@@ -1,0 +1,1 @@
+const SOLD_OUT = 'Sold Out';
